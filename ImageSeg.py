@@ -24,25 +24,46 @@ def kMeanSeg(img):
 
 
 
-    plt.axis('off')
-    plt.imshow(result_image)
+    # plt.axis('off')
+    # plt.imshow(result_image)
+    cv2.imshow("sd", result_image)
 
 
 
 def contourDetection(sample):
     img = cv2.resize(sample, (256,256))
-    cv2.imshow("hi", img)
+    #plt.axis('off')
+    #plt.imshow(img)
+
+    gray = cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
+    _,thresh = cv2.threshold(gray, np.mean(gray), 255, cv2.THRESH_BINARY_INV)
+
+    edges = cv2.dilate(cv2.Canny(thresh,0,255),None)
+
+    cnt = sorted(cv2.findContours(edges, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)[-2], key=cv2.contourArea)[-1]
+    mask = np.zeros((256,256), np.uint8)
+    masked = cv2.drawContours(mask, [cnt],-1, 255, -1)
+
+    dst = cv2.bitwise_and(img, img, mask=mask)
+    segmented = cv2.cvtColor(dst, cv2.COLOR_BGR2RGB)
+
+    cv2.imshow("sd", segmented)
+    # plt.axis('off')
+    # plt.imshow(thresh)
+
+
 
 
 
 
 image = cv2.imread("London_Big_Ben_Phone_box.jpg")
+#image = cv2.imread("ball.webp")
 #changing to RGB
 img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 #cv2.imshow("this is color changed", img)
 
-kMeanSeg(img)
-#contourDetection(img)
+#kMeanSeg(img)
+contourDetection(img)
 
 
 cv2.waitKey(0)
