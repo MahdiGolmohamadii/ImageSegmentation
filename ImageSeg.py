@@ -27,6 +27,9 @@ def kMeanSeg(img):
     plt.axis('off')
     plt.imshow(result_image)
 
+
+
+
 image = cv2.imread("London_Big_Ben_Phone_box.jpg")
 #changing to RGB
 img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
