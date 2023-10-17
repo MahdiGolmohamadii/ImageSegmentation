@@ -29,13 +29,20 @@ def kMeanSeg(img):
 
 
 
+def contourDetection(sample):
+    img = cv2.resize(sample, (256,256))
+    cv2.imshow("hi", img)
+
+
+
 
 image = cv2.imread("London_Big_Ben_Phone_box.jpg")
 #changing to RGB
 img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-cv2.imshow("this is color changed", img)
+#cv2.imshow("this is color changed", img)
 
 kMeanSeg(img)
+#contourDetection(img)
 
 
 cv2.waitKey(0)
